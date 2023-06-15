@@ -1,0 +1,14 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: GLOBAL_CONFIG
+  profiles:
+    active: default
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/NARESHSWAMI199/wholesale-config
+          skipSslValidation: true
