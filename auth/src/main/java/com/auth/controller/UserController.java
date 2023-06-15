@@ -28,7 +28,7 @@ public class UserController extends BaseController {
         return ResponseEntity.ok().body(userDto);
     }
 
-    @GetMapping("/all/users")
+    @GetMapping("/")
     public ResponseEntity<List<UserDto>> getAllUser() {
         List<UserDto> userDtos = userService.getAllUser().stream().map(user -> convertToDto(user)).collect(Collectors.toList());
         return ResponseEntity.ok().body(userDtos);
