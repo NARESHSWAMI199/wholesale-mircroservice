@@ -3,6 +3,7 @@ package com.wholesale.controllers;
 
 import com.wholesale.dto.WholesaleDto;
 import com.wholesale.entities.Wholesale;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,17 @@ public class WholesaleController extends BaseController {
 
 
     @GetMapping("/{id}")
+    @CircuitBreaker(name="hoaldetail",fallbackMethod = "hello")
     public ResponseEntity<WholesaleDto> getWholesaleById(@PathVariable Integer id) {
         WholesaleDto wholesaleDto = convertToDto(wholesaleService.getWholesaleById(id));
         return ResponseEntity.ok().body(wholesaleDto);
     }
 
+    public ResponseEntity<WholesaleDto> hello(Integer id,Exception e) {
+        e.printStackTrace();
+        WholesaleDto wholesaleDto = WholesaleDto.builder().storeName("dummy").build();
+        return ResponseEntity.ok().body(wholesaleDto);
+    }
     @GetMapping("/deleted/{id}")
     public ResponseEntity<Map<String, Object>> deleteWholesale(@PathVariable Integer id) {
         wholesaleService.deleteWholesale(id);

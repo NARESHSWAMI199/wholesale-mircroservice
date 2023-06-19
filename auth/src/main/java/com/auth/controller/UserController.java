@@ -3,6 +3,7 @@ package com.auth.controller;
 
 import com.auth.dto.UserDto;
 import com.auth.entity.User;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController extends BaseController {
 
+
+    /** we are using here circuit breaker in case api is down then we can call another method. or don't send the request */
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable int userId) {
         UserDto userDto = convertToDto(userService.getUserById(userId));
         return ResponseEntity.status(200).body(userDto);
     }
+
+
+
+
 
     @GetMapping("/slug/{slug}")
     public ResponseEntity<UserDto> getAllUser(@PathVariable String slug) {
