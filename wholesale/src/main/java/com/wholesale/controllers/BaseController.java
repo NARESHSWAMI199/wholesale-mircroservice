@@ -17,25 +17,5 @@ public class BaseController {
     @Autowired
     protected WholesaleServiceImpl wholesaleService;
 
-    @Autowired
-    protected ModelMapper modelMapper;
-
-
-    protected WholesaleDto convertToDto(Wholesale wholesale) {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        return modelMapper.map(wholesale, WholesaleDto.class);
-    }
-
-
-    protected Wholesale convertToEntity(Integer userId, WholesaleDto wholesaleDto) {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        Wholesale wholesale = modelMapper.map(wholesaleDto, Wholesale.class);
-        wholesale.setSlug(UUID.randomUUID().toString());
-        wholesale.setUpdatedAt(Util.getCurrentTime());
-        wholesale.setCreatedAt(Util.getCurrentTime());
-        wholesale.setCreatedBy(userId);
-        wholesale.setUpdatedBy(userId);
-        return wholesale;
-    }
 
 }

@@ -65,7 +65,7 @@ public class Wholesale implements Serializable {
     Integer updatedBy;
 
     @Column(name = "is_deleted")
-    boolean is_deleted = Boolean.FALSE;
+    boolean isDeleted = Boolean.FALSE;
 
 
     @Transient

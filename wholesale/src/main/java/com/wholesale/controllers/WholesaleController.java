@@ -1,72 +1,74 @@
 package com.wholesale.controllers;
 
 
+import com.wholesale.dto.BasicActions;
 import com.wholesale.dto.WholesaleDto;
-import com.wholesale.entities.Wholesale;
+import com.wholesale.dto.WholesaleFilters;
+import com.wholesale.utils.EntityMapper;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/wholesale")
 public class WholesaleController extends BaseController {
 
 
-    @GetMapping("/")
-    public ResponseEntity<List<WholesaleDto>> getAllWholesale() {
-        List<WholesaleDto> wholesales = wholesaleService.getAllWholesale().stream().map(wholesale -> this.convertToDto(wholesale)).collect(Collectors.toList());
+  @Autowired
+  private EntityMapper entityMapper;
+
+    @PostMapping("")
+    public ResponseEntity<Page<WholesaleDto>> getAllWholesale(@RequestBody WholesaleFilters wholesaleFilters) {
+        Page<WholesaleDto> wholesales = wholesaleService.getAllWholesale(wholesaleFilters).map(wholesale -> entityMapper.convertToDto(wholesale));
         return ResponseEntity.ok().body(wholesales);
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{slug}")
     @CircuitBreaker(name="hoaldetail",fallbackMethod = "hello")
-    public ResponseEntity<WholesaleDto> getWholesaleById(@PathVariable Integer id) {
-        WholesaleDto wholesaleDto = convertToDto(wholesaleService.getWholesaleById(id));
+    public ResponseEntity<WholesaleDto> getWholesaleById(@PathVariable String slug) {
+        WholesaleDto wholesaleDto = entityMapper.convertToDto(wholesaleService.getWholesaleBySlug(slug));
         return ResponseEntity.ok().body(wholesaleDto);
     }
 
-    public ResponseEntity<WholesaleDto> hello(Integer id,Exception e) {
+    public ResponseEntity<WholesaleDto> hello(String slug ,Exception e) {
         e.printStackTrace();
         WholesaleDto wholesaleDto = WholesaleDto.builder().storeName("dummy").build();
         return ResponseEntity.ok().body(wholesaleDto);
     }
-    @GetMapping("/deleted/{id}")
-    public ResponseEntity<Map<String, Object>> deleteWholesale(@PathVariable Integer id) {
-        wholesaleService.deleteWholesale(id);
+    @GetMapping("/delete/{slug}")
+    public ResponseEntity<Map<String, Object>> deleteWholesale(@PathVariable String slug) {
+        wholesaleService.deleteWholesale(slug,0);
+        Map<String, Object> response = new HashMap();
+        response.put("message", "Successfully deleted.");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/updateStatus")
+    public ResponseEntity<Map<String, Object>> deleteWholesale(@RequestBody BasicActions basicActions) {
+        wholesaleService.updateStatus(basicActions,0);
         Map<String, Object> response = new HashMap();
         response.put("message", "Successfully deleted.");
         return ResponseEntity.ok().body(response);
     }
 
 
-    @PostMapping("/create")
+    @PostMapping(value = {"update","create"})
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody WholesaleDto wholesaleDto) {
         Map<String, Object> response = new HashMap();
-        Wholesale wholesale = convertToEntity(0, wholesaleDto);
-        WholesaleDto wholesaleDt = convertToDto(wholesaleService.createWholesale(wholesale));
-        response.put("message", "Successfully updated.");
+        WholesaleDto wholesaleDt = entityMapper.convertToDto(wholesaleService.updateWholesale(wholesaleDto,0));
         response.put("res", wholesaleDt);
-        return ResponseEntity.ok().body(response);
+        if (wholesaleDto.getId() > 1) {
+            response.put("message", "Successfully updated.");
+            return ResponseEntity.status(201).body(response);
+        }
+        return ResponseEntity.status(201).body(response);
     }
-
-
-
-/*
-    @GetMapping("/create")
-    public ResponseEntity<WholesaleDto> createWholesale(WholesaleDto wholesaleDto) {
-        WholesaleDto wholesale = wholesaleService.createWholesale(WholesaleDto);
-        Map<String, Object> response = new HashMap();
-        response.put("message", "Successfully created.");
-        response.put("res", )
-        return ResponseEntity.ok().body(response);
-    }
-*/
 
 
 }

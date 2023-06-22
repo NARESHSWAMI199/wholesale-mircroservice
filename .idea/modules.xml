@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/auth/auth.iml" filepath="$PROJECT_DIR$/auth/auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comments/comments.iml" filepath="$PROJECT_DIR$/comments/comments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/items/items.iml" filepath="$PROJECT_DIR$/items/items.iml" />
+      <module fileurl="file://$PROJECT_DIR$/serviceRepository/serviceRepository.iml" filepath="$PROJECT_DIR$/serviceRepository/serviceRepository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spring_wholesale.iml" filepath="$PROJECT_DIR$/.idea/spring_wholesale.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wholesale/wholesale.iml" filepath="$PROJECT_DIR$/wholesale/wholesale.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wholesaleApiGetway/wholesaleApiGetway.iml" filepath="$PROJECT_DIR$/wholesaleApiGetway/wholesaleApiGetway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wholesaleConfig/wholesaleConfig.iml" filepath="$PROJECT_DIR$/wholesaleConfig/wholesaleConfig.iml" />
+    </modules>
+  </component>
+</project>

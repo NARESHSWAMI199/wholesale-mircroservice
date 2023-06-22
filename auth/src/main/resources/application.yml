@@ -29,14 +29,32 @@ spring:
 
 
 
+# for default global circuit breakers.
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 6s
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        eventConsumerBufferSize: 10
 
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 5s
+        cancelRunningFuture: true
 
+  ratelimiter:
+    configs:
+      default:
+        limitForPeriod: 2
+        limitRefreshPeriod: 1s
+        timeoutDuration: 1s
 
-
-
-
-
-
-
-
-
+# you can also auto retry with resilience4j

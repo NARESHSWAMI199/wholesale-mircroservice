@@ -12,6 +12,7 @@ import lombok.*;
 public class WholesaleDto {
     int id;
     String storeName;
+    String slug;
     String image;
     String storeCategory;
     Float rating;

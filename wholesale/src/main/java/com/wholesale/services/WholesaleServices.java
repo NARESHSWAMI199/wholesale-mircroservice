@@ -1,21 +1,31 @@
 package com.wholesale.services;
 
 
+import com.wholesale.dto.BasicActions;
 import com.wholesale.dto.WholesaleDto;
+import com.wholesale.dto.WholesaleFilters;
 import com.wholesale.entities.Wholesale;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface WholesaleServices {
 
 
-    List<Wholesale> getAllWholesale();
-    public Wholesale getWholesaleById(int id);
+    Page<Wholesale> getAllWholesale(WholesaleFilters wholesaleFilters);
 
-    public Wholesale getWholesaleByUserId(int userId);
+    Wholesale getWholesaleById(int id);
 
-    public Wholesale deleteWholesale(int id);
+    Wholesale getWholesaleBySlug(String slug);
 
-    public Wholesale createWholesale(Wholesale wholesale);
+    Wholesale getWholesaleByUserId(int userId);
+
+    void deleteWholesale(String slug,int userId);
+
+
+    Wholesale createWholesale(Wholesale wholesale);
+
+    void updateStatus(BasicActions basicActions, int userId);
+
+
+    Wholesale updateWholesale(WholesaleDto wholesaleDto,int userId);
 
 }
