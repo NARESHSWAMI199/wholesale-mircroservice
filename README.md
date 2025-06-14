@@ -67,3 +67,28 @@ The interaction between the Eureka Discovery Server and your microservices happe
 4.  Configure `application.properties` or `application.yml` (e.g., set `server.port=8761`, `eureka.client.registerWithEureka=false`, `eureka.client.fetchRegistry=false` for the server itself).
 
 This setup makes your Spring Boot application act as the central "Eureka discovery server" for your microservices ecosystem.
+
+### Microservice For Eureka Server
+- Folder Name :
+  - ServiceRepository
+- Anotations : 
+  ```java
+    @EnableEurekaServer
+  ```
+- configration
+  ```xml
+  server:
+    port: 8761
+  
+  
+  
+  eureka:
+    instance:
+      hostname : localhost
+  
+    client:
+      register-with-eureka: false
+      fetch-registry: false
+
+  ```
+
