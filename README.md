@@ -164,10 +164,10 @@ Essentially, Spring Cloud Gateway acts as the **"front door"** to your microserv
   - wholesaleApiGatway
 - Annotations
 ```java
+  @EnableEurekaClient // Same for all microservices
 ```
 - Configurations
-- 
-  ```yml
+```yml
   server :
     port : 8080
   
