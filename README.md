@@ -164,7 +164,7 @@ Essentially, Spring Cloud Gateway acts as the **"front door"** to your microserv
   - wholesaleApiGatway
 - Annotations
 ```java
-  @EnableEurekaClient // Same for all microservices
+  @EnableEurekaClient // Same for all microservices or @EnableDiscoveryClient for spring cloud versions 25.x.x
 ```
 - Configurations
 ```yml
